@@ -10,4 +10,8 @@
 html, body, #app {
   @include rect(100%, 100%)
 }
+body {
+  color: #212121;
+  @include background-color(#f4f4f4);
+}
 </style>
