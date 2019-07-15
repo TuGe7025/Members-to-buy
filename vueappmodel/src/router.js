@@ -13,6 +13,11 @@ export default new Router({
       redirect: '/home'
     },
     {
+      path: '/garage',
+      name: 'garage',
+      component: () => import('./views/Garage-Kits/Garage.vue')
+    },
+    {
       path: '/home',
       name: 'home',
       components: {

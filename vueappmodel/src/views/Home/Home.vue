@@ -7,11 +7,31 @@
     </header>
     <div class="wrapper">
       <nav class="home-nav">
-        <div class="home-nav-box" v-for="(tabs, index) of nav" :key="index" >
-          <div class="home-nav-img">
-            <img :src="tabs.imageUrl">
+        <div class="nav-box" v-for="(tabs, index) of nav" :key="index" >
+          <router-link to="/garage" tag="div" class="home-nav-box" v-if="index === 0">
+            <div class="home-nav-img">
+              <img :src="tabs.imageUrl">
+            </div>
+            <p>{{tabs.name}}</p>
+          </router-link>
+          <div class="home-nav-box" v-if="index === 1">
+            <div class="home-nav-img">
+              <img :src="tabs.imageUrl">
+            </div>
+            <p>{{tabs.name}}</p>
           </div>
-          <p>{{tabs.name}}</p>
+          <div class="home-nav-box" v-if="index === 2">
+            <div class="home-nav-img">
+              <img :src="tabs.imageUrl">
+            </div>
+            <p>{{tabs.name}}</p>
+          </div>
+          <div class="home-nav-box" v-if="index === 3">
+            <div class="home-nav-img">
+              <img :src="tabs.imageUrl">
+            </div>
+            <p>{{tabs.name}}</p>
+          </div>
         </div>
         <!-- <div class="home-nav-box" >
           <div class="home-nav-img">
@@ -62,6 +82,9 @@ export default {
 
 <style lang="scss">
 @import '@/lib/reset.scss';
+.nav-box {
+  @include rect(100%, 100%);
+}
   .home-header {
     width: 100%;
     position: fixed;
@@ -88,6 +111,7 @@ export default {
       text-align: center;
       .home-nav-box {
         @include flex();
+        width: 100%;
         height: .8rem;
         .home-nav-img {
           overflow:hidden;
