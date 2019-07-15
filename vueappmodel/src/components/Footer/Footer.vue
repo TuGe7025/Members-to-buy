@@ -23,7 +23,6 @@
 .footer {
   position: fixed;
   bottom: 0;
-  left: 0;
   @include rect(100%, .49rem);
   @include flexbox();
   text-align: center;
