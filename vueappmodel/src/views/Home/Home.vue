@@ -7,13 +7,13 @@
     </header>
     <div class="wrapper">
       <nav class="home-nav">
-        <div class="home-nav-box" >
+        <div class="home-nav-box" v-for="(tabs, index) of nav" :key="index" >
           <div class="home-nav-img">
-            <img>
+            <img :src="tabs.imageUrl">
           </div>
-          <p>手办模玩</p>
+          <p>{{tabs.name}}</p>
         </div>
-        <div class="home-nav-box" >
+        <!-- <div class="home-nav-box" >
           <div class="home-nav-img">
             <img>
           </div>
@@ -30,36 +30,58 @@
             <img>
           </div>
           <p>商品分类</p>
-        </div>
+        </div> -->
       </nav>
       <div class="home-content">
-        <div class="home-content-goods">
+        <div class="home-content-goods" :v-if="list.templateId === '4'" v-for="(list, index) of feeds" :key="index">
           <div class="goods-img">
             <div class="goods-img-box">
-              <img/>
+              <img :src="list.imageUrls"/>
             </div>
           </div>
           <div class="home-content-info">
             <div class="info-desc">
-              <p class="desc">BANPRESTO（眼镜厂）Qposkettttt</p>
-              <p class="brief">灭鬼小分队第二弹出售啦</p>
+              <p class="desc">{{list.title}}</p>
+              <p class="brief">{{list.brief}}</p>
             </div>
             <p class="price">
               <span class="symbol">￥</span>
-              <span class="number">72</span>
+              <span class="number" v-for="(pre, idx) of list.priceDesc" :key="idx">{{pre}}</span>
             </p>
-            <p class="like">431人想要</p>
+            <p class="like">{{list.like}}人想要</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data () {
+    return {
+      nav: '', // 头部导航数据
+      feeds: '' // 列表数据
+    }
+  },
+  mounted () {
+    fetch('/api/data/datalist')
+      .then(res => res.json()).then(data => {
+        this.nav = data[0].data.vo.tabs
+        this.feeds = data[0].data.vo.feeds.list
+        console.log(data[0].data.vo)
+        console.log(data[0].data.vo.feeds.list)
+        console.log(this.nav)
+      })
+  }
+}
+</script>
+
 <style lang="scss">
 @import '@/lib/reset.scss';
   .home-header {
     width: 100%;
     position: fixed;
+    z-index: 1000;
     @include background-color(#fb7299);
     .home-header-cont {
       height: 44px;
@@ -69,8 +91,10 @@
     }
   }
   .wrapper {
+    position: relative;
     @include rect(100%, 100%);
     padding-top: 44px;
+    @include overflow(auto);
     .home-nav {
       @include flexbox();
       box-sizing: border-box;
@@ -81,7 +105,7 @@
         @include flex();
         height: 80px;
         .home-nav-img {
-          @include rect(72px, 72px);
+          @include rect(.72rem, .72rem);
           @include margin(0 auto);
           img {
             @include display(block);
@@ -96,17 +120,17 @@
       }
     }
     .home-content {
-      @include padding(0 12px);
+      @include rect(100%, 100%);
+      @include padding(0 .12rem);
       .home-content-goods {
         @include flexbox();
-        @include rect(100%, 152px);
+        @include rect(100%, 1.52rem);
         margin-bottom: 12px;
         border-radius: 8px;
         @include background-color(#fff);
         box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
-        @include overflow(hidden);
         .goods-img {
-          @include rect(142px, 142px);
+          @include rect(1.42rem, 1.42rem);
           @include margin(5px 0 0 5px);
           padding-top: 0;
           border-radius: 4px;
@@ -123,7 +147,7 @@
       }
       .home-content-info {
         box-sizing: border-box;
-        @include flex();
+        @include flex(1);
         height: 100%;
         padding-top: 13px;
         position: relative;
