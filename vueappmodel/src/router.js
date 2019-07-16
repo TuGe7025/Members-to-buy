@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Detail from './views/Detail/Detail.vue'
 import Footer from '@/components/Footer/Footer.vue'
 
 Vue.use(Router)
@@ -11,6 +12,13 @@ export default new Router({
     {
       path: '/',
       redirect: '/home'
+    },
+    {
+      path: '/detail/:id',
+      name: 'detail',
+      components: {
+        default: Detail
+      }
     },
     {
       path: '/garage',

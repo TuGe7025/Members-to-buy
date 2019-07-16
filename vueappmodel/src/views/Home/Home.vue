@@ -6,65 +6,71 @@
       </div>
     </header>
     <div class="wrapper">
-      <nav class="home-nav">
-        <div class="nav-box" v-for="(tabs, index) of nav" :key="index" >
-          <router-link to="/garage" tag="div" class="home-nav-box" v-if="index === 0">
-            <div class="home-nav-img">
-              <img :src="tabs.imageUrl">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <nav class="home-nav">
+          <div class="nav-box" v-for="(tabs, index) of nav" :key="index" >
+            <router-link to="/garage" tag="div" class="home-nav-box" v-if="index === 0">
+              <div class="home-nav-img">
+                <img :src="tabs.imageUrl">
+              </div>
+              <p>{{tabs.name}}</p>
+            </router-link>
+            <div class="home-nav-box" v-if="index === 1">
+              <div class="home-nav-img">
+                <img :src="tabs.imageUrl">
+              </div>
+              <p>{{tabs.name}}</p>
             </div>
-            <p>{{tabs.name}}</p>
-          </router-link>
-          <div class="home-nav-box" v-if="index === 1">
-            <div class="home-nav-img">
-              <img :src="tabs.imageUrl">
+            <div class="home-nav-box" v-if="index === 2">
+              <div class="home-nav-img">
+                <img :src="tabs.imageUrl">
+              </div>
+              <p>{{tabs.name}}</p>
             </div>
-            <p>{{tabs.name}}</p>
+            <router-link to="/kind" tag="div" class="home-nav-box" v-if="index === 3">
+              <div class="home-nav-img">
+                <img :src="tabs.imageUrl">
+              </div>
+              <p>{{tabs.name}}</p>
+            </router-link>
           </div>
-          <div class="home-nav-box" v-if="index === 2">
-            <div class="home-nav-img">
-              <img :src="tabs.imageUrl">
-            </div>
-            <p>{{tabs.name}}</p>
-          </div>
-          <div class="home-nav-box" v-if="index === 3">
-            <div class="home-nav-img">
-              <img :src="tabs.imageUrl">
-            </div>
-            <p>{{tabs.name}}</p>
-          </div>
+        </nav>
+        <div class="home-content">
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="onLoad"
+          >
+          <!-- 列表信息 -->
+            <Goods :feeds="feeds" />
+          </van-list>
         </div>
-        <!-- <div class="home-nav-box" >
-          <div class="home-nav-img">
-            <img>
-          </div>
-          <p>漫展购票</p>
-        </div>
-        <div class="home-nav-box" >
-          <div class="home-nav-img">
-            <img>
-          </div>
-          <p>新品上架</p>
-        </div>
-        <div class="home-nav-box" >
-          <div class="home-nav-img">
-            <img>
-          </div>
-          <p>商品分类</p>
-        </div> -->
-      </nav>
-      <div class="home-content">
-        <Goods :feeds="feeds" />
+      </van-pull-refresh>
+      <div class="backTop" v-show="flag" @click="backTop">
+        <van-icon size="30px" name="upgrade" color="red" />
+      </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 import Goods from '@/components/home-goods/goods.vue'
+import Vue from 'vue'
+import { Swipe, SwipeItem, List, PullRefresh, Icon } from 'vant'
+Vue.use(Swipe).use(SwipeItem)
+Vue.use(List) // 类似于全局注册组件
+Vue.use(PullRefresh)
+Vue.use(Icon)
 export default {
   data () {
     return {
       nav: '', // 头部导航数据
-      feeds: [] // 列表数据
+      feeds: [], // 列表数据
+      loading: false, // 当页面滚动到底部时触发load事件并将loading值设为true
+      finished: false, // 当没有数据时，此值为true
+      pageNum: 2, // 页码
+      isLoading: false,
+      flag: false
     }
   },
   components: {
@@ -76,6 +82,48 @@ export default {
         this.nav = data[0].data.vo.tabs
         this.feeds = data[0].data.vo.feeds.list
       })
+    document.querySelector('.wrapper').addEventListener('scroll', this.scrollToTop)
+  },
+  methods: {
+    backTop () {
+      document.querySelector('.wrapper').scrollTop = 0
+    },
+    scrollToTop () {
+      var scrollTop = document.querySelector('.wrapper').scrollTop
+      if (scrollTop > 200) {
+        // 显示回到顶部图标
+        this.flag = true
+      } else {
+        // 隐藏回到顶部图标
+        this.flag = false
+      }
+    },
+    onRefresh () {
+      this.isLoading = true
+      fetch('/api/data/findlist').then(res => res.json()).then(data => {
+        this.isLoading = false // 下拉刷新结束
+        this.feeds = data[0].data.vo.feeds.list // 重置列表的数据
+        this.pageNum = 1 // 重置页码 --- 下拉刷新相当于第一页数据
+        this.finished = false // 表示可以继续上拉加载下一页的数据
+      })
+    },
+    onLoad () {
+      // console.log('可以加载数据了')
+      this.loading = true // 开始加载数据
+      fetch('/api/data/findlist?pageNum=' + this.pageNum)
+        .then(res => res.json()).then(data => {
+          this.loading = false // 数据加载完毕
+          this.pageNum++
+          console.log(data)
+          if (data.length === 0) {
+            // console.log('没有数据了')
+            this.finished = true // 没有数据了
+          } else {
+            // 有数据就要涉及到数组的合并
+            this.feeds = [...this.feeds, ...data[0].data.vo.feeds.list]
+          }
+        })
+    }
   }
 }
 </script>
@@ -98,7 +146,6 @@ export default {
     }
   }
   .wrapper {
-    padding-bottom: .3rem;
     position: relative;
     @include rect(100%, 100%);
     padding-top: .44rem;
@@ -132,6 +179,9 @@ export default {
     .home-content {
       @include rect(100%, 100%);
       @include padding(0 .12rem);
+      .van-list__finished-text {
+        margin-bottom: .44rem;
+      }
       .home-content-goods {
         @include flexbox();
         @include rect(100%, 1.52rem);
@@ -275,5 +325,10 @@ export default {
         }
       }
     }
+  }
+  .backTop {
+    position: fixed;
+    right: .3rem;
+    bottom: .6rem;
   }
 </style>

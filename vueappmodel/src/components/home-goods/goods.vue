@@ -1,11 +1,11 @@
 <template>
 <div class="box">
-  <div v-for="(list, index) of feeds" :key="index">
+  <router-link tag="div" :to = "{name: 'detail', params: {id: list.itemsId}}" v-for="(list, index) of feeds" :key="index">
     <div v-if="list.templateId === 4">
       <div class="home-content-goods">
         <div class="goods-img">
           <div class="goods-img-box">
-            <img :src="list.imageUrls" :alt="list.title"/>
+            <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" :alt="list.title"/>
           </div>
         </div>
         <div class="home-content-info">
@@ -18,7 +18,8 @@
             <span class="number" v-for="(pre, idx) of list.price" :key="idx">
               <span v-if="idx === 1">{{pre}}</span></span>
           </p>
-          <p class="like">{{list.like}}人想要</p>
+          <p class="like" v-if="list.like >= 10000">{{(list.like / 10000).toFixed(1)}}万人想要</p>
+          <p class="like" v-if="list.like < 10000">{{list.like}}人想要</p>
         </div>
       </div>
     </div>
@@ -31,7 +32,7 @@
         <div class="expo-main">
           <div class="expo-main-img">
             <div class="box">
-              <img :src="list.imageUrls" />
+              <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" />
             </div>
           </div>
           <p class="expo-main-name">{{list.title}}</p>
@@ -55,7 +56,7 @@
         <div class="expo-main">
           <div class="expo-main-img">
             <div class="box">
-              <img :src="list.imageUrls" />
+              <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" />
             </div>
           </div>
           <p class="expo-main-name">{{list.title}}</p>
@@ -63,18 +64,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </div>
 </template>
 <script>
+import Vue from 'vue'
+import { Lazyload } from 'vant'
+// options 为可选参数，无则不传
+Vue.use(Lazyload)
 export default {
   props: {
     feeds: {
       type: Array
     }
-  },
-  mounted () {
-
   }
 }
 </script>
