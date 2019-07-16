@@ -28,6 +28,7 @@
   text-align: center;
   padding-top: 7px;
   border-top:1px solid #e7e7e7;
+  background-color:#fff;
   div {
     &.router-link-active {
       @include color(#fb7299);

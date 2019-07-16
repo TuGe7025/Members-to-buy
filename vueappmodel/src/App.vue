@@ -14,4 +14,7 @@ body {
   color: #212121;
   @include background-color(#f4f4f4);
 }
+.home {
+  @include rect(100%, 100%);
+}
 </style>
