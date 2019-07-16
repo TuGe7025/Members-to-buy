@@ -5,7 +5,7 @@
       <div class="home-content-goods">
         <div class="goods-img">
           <div class="goods-img-box">
-            <img :src="list.imageUrls" :alt="list.title"/>
+            <img :src="list.imageUrls[0]" :alt="list.title"/>
           </div>
         </div>
         <div class="home-content-info">

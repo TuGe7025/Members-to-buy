@@ -13,18 +13,21 @@
       </header>
       <div class="main">
         <nav class="kind-nav">
-          <van-sidebar v-model="activeKey" @click="chang(activKey)">
+          <van-sidebar v-model="activeKey" >
             <van-sidebar-item :title="item.typeName" v-for="(item,index) of vo" :key="index" />
+            <!-- {{item}} -->
           </van-sidebar>
         </nav>
-        <div class="kind-content">
+        <div class="kind-content" ref="side">
           <div class="category-part" v-for="(item,index) of vo" :key="index">
+            <!-- {{item}} -->
             <h5 class="category-title">{{item.typeName}}</h5>
             <ul class="category-ul">
-              <li class="category-item" v-for="(ite,ind) of item.categoryLogicVOList" :key="ind">
+              <router-link to="/garage" tag='li' class="category-item" v-for="(ite,ind) of item.categoryLogicVOList" :key="ind">
                 <img  :alt='ite.name' v-lazy='ite.img' />
                 <p class="desc">{{ite.name}}</p>
-              </li>
+                <!-- {{activeKey}} -->
+              </router-link>
             </ul>
           </div>
         </div>
@@ -34,20 +37,47 @@
 </template>
 <script>
 import Vue from 'vue'
-import { Search, Icon, Sidebar, SidebarItem, Lazyload} from 'vant'
+import { Search, Icon, Sidebar, SidebarItem } from 'vant'
 
 Vue.use(Search)
 Vue.use(Icon)
 Vue.use(Sidebar)
 Vue.use(SidebarItem)
-Vue.use(Lazyload)
+// Vue.use(Lazyload)
 export default {
   data () {
     return {
       value: '',
       activeKey: 0,
-      vo: '',
+      vo: ''
       // img: []
+    }
+  },
+  watch: {
+    activeKey (newval, oldval) {
+      // const content = document.querySelector('.kind-content')
+      let content = this.$refs.side
+      if (newval === 0) {
+        content.scrollTop = 0
+      }
+      if (newval === 1) {
+        content.scrollTop = 425
+      }
+      if (newval === 2) {
+        content.scrollTop = 732
+      }
+      if (newval === 3) {
+        content.scrollTop = 927
+      }
+      if (newval === 4) {
+        content.scrollTop = 1220
+      }
+      if (newval === 5) {
+        content.scrollTop = 1434
+      }
+      if (newval === 6) {
+        content.scrollTop = 2022
+      }
     }
   },
   methods: {
@@ -55,7 +85,6 @@ export default {
       this.$router.back()
     },
     scrollFn () {
-      console.log(event.target.scrollTop)
       if (event.target.scrollTop > 0 & event.target.scrollTop < 425) {
         this.activeKey = 0
       }
@@ -85,6 +114,7 @@ export default {
       .then(data => {
         // let a = data[0].data.vo
         this.vo = data[0].data.vo
+        console.log(data[0].data)
       //   let arr = []
       //   let arry = []
       //   a.map((item,index) => {
@@ -96,7 +126,7 @@ export default {
       //   })
       })
     const content = document.querySelector('.kind-content')
-    // 开启监听滚动条的滚动事件
+    // console.log(this.$refs.side)
     content.addEventListener('scroll', this.scrollFn)
   }
 }

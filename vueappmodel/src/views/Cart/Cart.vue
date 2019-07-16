@@ -9,27 +9,7 @@
         />
       </header>
       <div class="cart-content" >
-        <div class="shop">
-          <div class="item-title">
-            <span class="info">昆山仓</span>
-          </div>
-          <div class="item">
-            <van-radio-group v-model="radio">
-              <van-radio name="1">
-                <div class="item-img">
-                  <img src="//i0.hdslb.com/bfs/mall/mall/91/0d/910dd9dcb31fb5224f463d961a994a28.png@160w_160h.jpg" width="80px"
-        height="80px">
-                </div>
-                <div class="info-container">
-                  <div class="item-name two-line">万代 DX假面骑士 时空驱动器腰带 变身手表 成品模型</div>
-                  <!---->
-                  <div class="item-spec">盖茨复苏变身手表</div>
-                  <!---->
-                </div>
-              </van-radio>
-            </van-radio-group>
-          </div>
-        </div>
+        <cartList />
         <div class="cart-item" v-show='falg'>
           <div class="cart-img"></div>
           <p class="cart-title">购物车里面空空如也</p>
@@ -40,16 +20,18 @@
 </template>
 <script>
 import Vue from 'vue'
-import { NavBar, RadioGroup, Radio } from 'vant'
+import { NavBar } from 'vant'
+import cartList from '@/components/cartList/cartList'
 
 Vue.use(NavBar)
-Vue.use(RadioGroup)
-Vue.use(Radio)
 export default {
   data () {
     return {
       falg: true
     }
+  },
+  components: {
+    cartList
   },
   methods: {
     onClickLeft () {
@@ -92,11 +74,11 @@ export default {
     }
   }
 }
+.cart-header,.van-hairline--bottom {
+    @include rect(100%, 0.44rem);
+}
 .van-icon-arrow-left {
   @include font-size(20px);
   color: #858080;
-}
-.van-radio>.van-radio__label {
-  display: flex;
 }
 </style>
