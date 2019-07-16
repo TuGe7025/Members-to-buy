@@ -22,7 +22,7 @@
             <h5 class="category-title">{{item.typeName}}</h5>
             <ul class="category-ul">
               <li class="category-item" v-for="(ite,ind) of item.categoryLogicVOList" :key="ind">
-                <img :src="ite.img" :alt='ite.name' />
+                <img  :alt='ite.name' v-lazy='ite.img' />
                 <p class="desc">{{ite.name}}</p>
               </li>
             </ul>
@@ -34,18 +34,20 @@
 </template>
 <script>
 import Vue from 'vue'
-import { Search, Icon, Sidebar, SidebarItem } from 'vant'
+import { Search, Icon, Sidebar, SidebarItem, Lazyload} from 'vant'
 
 Vue.use(Search)
 Vue.use(Icon)
 Vue.use(Sidebar)
 Vue.use(SidebarItem)
+Vue.use(Lazyload)
 export default {
   data () {
     return {
       value: '',
       activeKey: 0,
-      vo: ''
+      vo: '',
+      // img: []
     }
   },
   methods: {
@@ -81,8 +83,17 @@ export default {
     fetch('api/kinddata')
       .then(res => res.json())
       .then(data => {
-        console.log(data[0])
+        // let a = data[0].data.vo
         this.vo = data[0].data.vo
+      //   let arr = []
+      //   let arry = []
+      //   a.map((item,index) => {
+      //     arr.push(item.categoryLogicVOList)
+      //   })
+      //   let b = arry.concat(...arr)
+      //   b.map((item,index) => {
+      //     this.img = item.img
+      //   })
       })
     const content = document.querySelector('.kind-content')
     // 开启监听滚动条的滚动事件
