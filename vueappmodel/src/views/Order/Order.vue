@@ -3,11 +3,10 @@
     <div class="order">
       <header class="order-header">
         <van-nav-bar title="我的订单" left-arrow @click-left="onClickLeft" @click-right="onClickRight">
-          <span class="iconfont iconshouye1" slot="right" />
+          <span class="iconfont iconhuiyuangoux" slot="right" />
         </van-nav-bar>
       </header>
-      <nav class="order-nav">订单导航</nav>
-      <div class="order-list">订单列表</div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -25,6 +24,32 @@ export default {
     onClickRight () {
       this.$router.push('/home')
     }
+  },
+  watch: {
+    $route (newval, oldval) {
+      const { $store: { state: { loginState } } } = this
+      if (newval.name === 'order') {
+        if (loginState === 'ok') {
+          this.$router.replace('/order/login')
+        } else {
+          this.$router.replace('/order/nologin')
+        }
+      }
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      const { $store: { state: { loginSation } } } = vm
+      if (to.name === 'order') {
+        if (loginSation === 'ok') {
+          vm.$router.replace('/order/login')
+        } else {
+          vm.$router.replace('/order/nologin')
+        }
+      } else {
+        next()
+      }
+    })
   }
 }
 </script>
@@ -36,6 +61,10 @@ export default {
   @include flex-direction(column);
 }
 .contaiter {
+  @include flex();
+  @include rect(100%, 100%);
+}
+.order {
   @include flex();
   @include rect(100%, 100%);
   @include flexbox();
@@ -50,8 +79,13 @@ export default {
 }
 .van-nav-bar__right {
   span {
-    @include font-size(18px);
+    @include font-size(20px);
     color: #858080;
+  }
+}
+.order-header {
+  .van-nav-bar{
+    background: #fb7299;
   }
 }
 </style>

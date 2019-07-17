@@ -91,7 +91,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 @import '@/lib/reset.scss';
 .main-goods {
   padding-top: .44rem;

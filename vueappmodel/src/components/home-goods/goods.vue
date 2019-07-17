@@ -5,7 +5,7 @@
       <div class="home-content-goods">
         <div class="goods-img">
           <div class="goods-img-box">
-            <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" :alt="list.title"/>
+            <img v-lazy="list.imageUrls[0]"  :alt="list.title"/>
           </div>
         </div>
         <div class="home-content-info">
@@ -68,10 +68,10 @@
 </div>
 </template>
 <script>
-import Vue from 'vue'
-import { Lazyload } from 'vant'
+// import Vue from 'vue'
+// import { Lazyload } from 'vant'
 // options 为可选参数，无则不传
-Vue.use(Lazyload)
+// Vue.use(Lazyload)
 export default {
   props: {
     feeds: {
