@@ -43,7 +43,7 @@ export default {
     return {
       radio: '',
       value: '',
-      disnone: true
+      disnone: false
     }
   }
 }

@@ -115,18 +115,8 @@ export default {
         // let a = data[0].data.vo
         this.vo = data[0].data.vo
         console.log(data[0].data)
-      //   let arr = []
-      //   let arry = []
-      //   a.map((item,index) => {
-      //     arr.push(item.categoryLogicVOList)
-      //   })
-      //   let b = arry.concat(...arr)
-      //   b.map((item,index) => {
-      //     this.img = item.img
-      //   })
       })
     const content = document.querySelector('.kind-content')
-    // console.log(this.$refs.side)
     content.addEventListener('scroll', this.scrollFn)
   }
 }

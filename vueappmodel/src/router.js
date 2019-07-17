@@ -14,6 +14,16 @@ export default new Router({
       redirect: '/home'
     },
     {
+      path: '/login',
+      name: 'garage',
+      component: () => import('./views/User/userLogin.vue')
+    },
+    {
+      path: '/register',
+      name: 'garage',
+      component: () => import('./views/User/register.vue')
+    },
+    {
       path: '/detail/:id',
       name: 'detail',
       components: {
@@ -55,7 +65,17 @@ export default new Router({
       components: {
         default: () => import('./views/Order/Order.vue'),
         footer: Footer
-      }
+      },
+      children: [
+        {
+          path: 'nologin',
+          component: () => import('@/components/user-login/noLogin.vue')
+        },
+        {
+          path: 'login',
+          component: () => import('@/components/user-login/Login.vue')
+        }
+      ]
     }
   ]
 })

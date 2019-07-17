@@ -76,6 +76,7 @@ export default {
 }
 .cart-header,.van-hairline--bottom {
     @include rect(100%, 0.44rem);
+    background: #fb7299;
 }
 .van-icon-arrow-left {
   @include font-size(20px);
