@@ -7,7 +7,7 @@
             <div class="item-top">
               <div class="item-top-img">
                 <div class="img-box">
-                  <img v-lazy="items.data.itemsImg" :src="items.data.itemsImg"/>
+                  <img v-lazy="items.data.itemsImg"/>
                 </div>
               </div>
             </div>

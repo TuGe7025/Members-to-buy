@@ -5,7 +5,7 @@
       <div class="home-content-goods">
         <div class="goods-img">
           <div class="goods-img-box">
-            <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" :alt="list.title"/>
+            <img v-lazy="list.imageUrls[0]" :alt="list.title"/>
           </div>
         </div>
         <div class="home-content-info">
@@ -32,7 +32,7 @@
         <div class="expo-main">
           <div class="expo-main-img">
             <div class="box">
-              <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" />
+              <img v-lazy="list.imageUrls[0]" />
             </div>
           </div>
           <p class="expo-main-name">{{list.title}}</p>
@@ -56,7 +56,7 @@
         <div class="expo-main">
           <div class="expo-main-img">
             <div class="box">
-              <img v-lazy="list.imageUrls[0]" :src="list.imageUrls[0]" />
+              <img v-lazy="list.imageUrls[0]" />
             </div>
           </div>
           <p class="expo-main-name">{{list.title}}</p>
@@ -68,10 +68,10 @@
 </div>
 </template>
 <script>
-import Vue from 'vue'
-import { Lazyload } from 'vant'
-// options 为可选参数，无则不传
-Vue.use(Lazyload)
+// import Vue from 'vue'
+// import { Lazyload } from 'vant'
+// // options 为可选参数，无则不传
+// Vue.use(Lazyload)
 export default {
   props: {
     feeds: {
