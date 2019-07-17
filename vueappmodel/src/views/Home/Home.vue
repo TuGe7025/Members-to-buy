@@ -81,6 +81,7 @@ export default {
       .then(res => res.json()).then(data => {
         this.nav = data[0].data.vo.tabs
         this.feeds = data[0].data.vo.feeds.list
+        console.log(this.feeds)
       })
     document.querySelector('.wrapper').addEventListener('scroll', this.scrollToTop)
   },
