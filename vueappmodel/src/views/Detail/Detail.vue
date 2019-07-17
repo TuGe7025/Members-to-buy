@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <header>{{deta.title}}</header>
+  <div class="detail-content">
+    <header class="header">{{deta.title}}</header>
+    <header class="copy-header">{{deta.title}}</header>
   </div>
 </template>
 <script>
