@@ -114,7 +114,7 @@ export default {
       .then(data => {
         // let a = data[0].data.vo
         this.vo = data[0].data.vo
-        console.log(data[0].data)
+        // console.log(data[0].data)
       })
     const content = document.querySelector('.kind-content')
     content.addEventListener('scroll', this.scrollFn)

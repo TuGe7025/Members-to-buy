@@ -34,15 +34,17 @@ export default {
   @include flexbox();
   @include flex-direction(column);
   @include rect(100%, 100%);
-  position: relative;
+  // position: relative;
   .login-box {
-    position: absolute;
-    top: 1.5rem;
-    left: 0.5rem;
+    // position: absolute;
+    // top: 1.5rem;
+    // left: 0.5rem;
+    margin-top: 1rem;
     .login-wrapper-img {
       background: url(//s1.hdslb.com/bfs/static/mall-c/static/img/login.5707d77.png) no-repeat;
       @include rect(2.8rem, 1.5rem);
       background-size: 100% 100%;
+      margin: 0 auto;
     }
     .login-wrapper-title {
       padding: 0;
@@ -58,11 +60,8 @@ export default {
     }
     .login-button {
       margin-top: 25px;
-      width: 141px;
-      height: 40px;
       @include rect(1.4rem, 0.4rem);
-      position: absolute;
-      left: 0.6rem;
+      margin: 0.1rem auto;
       text-align: center;
       color: #fff;
       background: #fb7299;

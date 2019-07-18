@@ -15,13 +15,23 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'garage',
+      name: 'login',
       component: () => import('./views/User/userLogin.vue')
     },
     {
+      path: '/newaval',
+      name: 'new',
+      component: () => import('./views/New-arrival/New.vue')
+    },
+    {
       path: '/register',
-      name: 'garage',
+      name: 'register',
       component: () => import('./views/User/register.vue')
+    },
+    {
+      path: '/discount',
+      name: 'discount',
+      component: () => import('./views/Discount/Discount.vue')
     },
     {
       path: '/detail/:id',
