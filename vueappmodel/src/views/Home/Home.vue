@@ -15,18 +15,18 @@
               </div>
               <p>{{tabs.name}}</p>
             </router-link>
-            <div class="home-nav-box" v-if="index === 1">
+            <router-link to="/discount" tag="div" class="home-nav-box" v-if="index === 1">
+              <div class="home-nav-img">
+                <img :src="tabs.imageUrl">
+              </div>
+              <p>优惠卷</p>
+            </router-link>
+            <router-link to="/newaval" tag="div" class="home-nav-box" v-if="index === 2">
               <div class="home-nav-img">
                 <img :src="tabs.imageUrl">
               </div>
               <p>{{tabs.name}}</p>
-            </div>
-            <div class="home-nav-box" v-if="index === 2">
-              <div class="home-nav-img">
-                <img :src="tabs.imageUrl">
-              </div>
-              <p>{{tabs.name}}</p>
-            </div>
+            </router-link>
             <router-link to="/kind" tag="div" class="home-nav-box" v-if="index === 3">
               <div class="home-nav-img">
                 <img :src="tabs.imageUrl">
@@ -81,7 +81,7 @@ export default {
       .then(res => res.json()).then(data => {
         this.nav = data[0].data.vo.tabs
         this.feeds = data[0].data.vo.feeds.list
-        console.log(this.feeds)
+        // console.log(this.feeds)
       })
     document.querySelector('.wrapper').addEventListener('scroll', this.scrollToTop)
   },
@@ -115,7 +115,7 @@ export default {
         .then(res => res.json()).then(data => {
           this.loading = false // 数据加载完毕
           this.pageNum++
-          console.log(data)
+          // console.log(data)
           if (data.length === 0) {
             // console.log('没有数据了')
             this.finished = true // 没有数据了

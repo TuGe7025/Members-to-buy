@@ -151,7 +151,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .login {
   header {
     width: 100%;
@@ -191,9 +191,11 @@ export default {
       height: 0.25rem;
       width: 80%;
       margin: 0 auto;
+      display: flex;
+      justify-content: center;
       .sns-box-left, .sns-box-right {
         margin-top: .266667rem;
-        width: 1rem;
+        width: 0.8rem;
         display: inline-block;
         height: 0.01rem;
         background: #e7e7e7;
