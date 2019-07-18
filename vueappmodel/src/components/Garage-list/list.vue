@@ -2,7 +2,7 @@
   <div class="add-padding-top">
     <div class="goods">
       <div class="goods-list">
-        <div class="preload-wrapper" v-for="(items, index) of garagelist" :key="index">
+        <router-link tag="div" :to = "{name: 'detail', params: {id: items.data.itemsId}}" class="preload-wrapper"  v-for="(items, index) of garagelist" :key="index">
           <div class="goods-item">
             <div class="item-top">
               <div class="item-top-img">
@@ -37,7 +37,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>

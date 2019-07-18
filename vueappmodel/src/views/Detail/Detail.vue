@@ -20,7 +20,7 @@
           <div class="detail-img-wrapper">
             <div class="img-box">
               <van-swipe @change="onChange" >
-                <van-swipe-item v-for="(items, inde) of deta.imageUrls" :key="inde"><img :src="items"></van-swipe-item>
+                <van-swipe-item v-for="(items, inde) of deta.img" :key="inde"><img v-lazy="items"></van-swipe-item>
 
                 <div class="custom-indicator" slot="indicator">
                   {{ current + 1 }}/{{index}}
@@ -39,11 +39,11 @@
           </span>
           <span class="price-right">
             <span class="type">￥</span>
-            <span>14</span>
-            <span class="price-decimal">
+            <span>{{price}}</span>
+            <!-- <span class="price-decimal">
               <span class="visibility-hidden">.85</span>
               <span class="doubule-size">.85</span>
-            </span>
+            </span> -->
           </span>
         </div>
         <div class="time">
@@ -58,54 +58,54 @@
       </div>
     </div>
     <div class="panel">
-      <div class="main-title">{{deta.title}}</div>
+      <div class="main-title">{{deta.name}}</div>
       <div class="simple-desc"><div>{{deta.brief}}</div></div>
       <div class="simple-wrapper" style="height: 20px;">
         <div class="detail-price">
-          <span class="price-type">{{name}}</span>
+          <span class="price-type">全款</span>
           <span class="price-value">
-            <span class="currency-type">{{deta.priceSymbol}}</span>
-            <span style="display: inline-block;" v-for="(pre, index) of deta.priceDesc" :key="index">{{pre}}</span>
+            <span class="currency-type">￥</span>
+            <span style="display: inline-block;">{{deta.price}}</span>
           </span>
         </div>
       </div>
     </div>
-    <van-cell title="品牌" label="TAITO" value="查看更多" :center="true" is-link to="/home" />
-    <van-cell title="作品" :label="deta.title" value="查看更多" :center="true" is-link to="/home" />
+    <van-cell title="品牌" :label="deta.brandName" value="查看更多" :center="true" is-link to="/home" />
+    <van-cell title="作品" :label="deta.ipRightName" value="查看更多" :center="true" is-link to="/home" />
     <div class="procedure-wrapper">
       <div class="procedure-header">
         <div class="panel-inner-title">预售流程</div>
         <span>详细说明</span>
       </div>
-      <div class="procedure-content">
-        <div class="procedure-item-wrapper">
+      <div class="procedure-content" v-for="(state, ind) of states" :key="ind">
+        <div class="procedure-item-wrapper" v-if="ind === 0">
           <div class="procedure-item is-first procedure-active">
             <div class="time-wrapper">
-              <div class="year">2019.</div>
-              <div class="month">07.03</div>
+              <div class="year">{{state.timeNode.year}}.</div>
+              <div class="month">{{state.timeNode.day}}.{{state.timeNode.month}}</div>
             </div>
             <div class="procedure-item-line"></div>
-            <div class="procedure-process">预售开始，支付定金，完成预定</div>
+            <div class="procedure-process">{{state.process}}</div>
           </div>
         </div>
-        <div class="procedure-item-wrapper">
+        <div class="procedure-item-wrapper" v-if="ind === 2">
           <div class="procedure-item">
             <div class="time-wrapper">
-              <div class="year">2019.</div>
-              <div class="month">10</div>
+              <div class="year">{{state.timeNode.year}}.</div>
+              <div class="month">{{state.timeNode.month}}</div>
             </div>
             <div class="procedure-item-line"></div>
-            <div class="procedure-process">商品出荷，等待补款通知</div>
+            <div class="procedure-process">{{state.process}}</div>
           </div>
         </div>
-        <div class="procedure-item-wrapper" style="height:12px;">
+        <div class="procedure-item-wrapper" style="height:12px;" v-if="ind === 3">
           <div class="procedure-item">
             <div class="time-wrapper">
-              <div class="year"></div>
-              <div class="month">时间待定</div>
+              <div class="year">{{state.timeNode.year === null ? "":state.timeNode.year}}</div>
+              <div class="month">{{state.timeNode.month === null ? "时间待定" : state.timeNode.month}}</div>
             </div>
             <div class="procedure-item-line" style="height: 6px;"></div>
-            <div class="procedure-process">补款发货，填写收货地址</div>
+            <div class="procedure-process">{{state.process}}</div>
           </div>
         </div>
       </div>
@@ -113,12 +113,116 @@
     <div class="ensure-img-wrapper">
       <img src="//s1.hdslb.com/bfs/static/mall-c/static/img/inform.bea9019.png" class="ensure-img" />
     </div>
+    <div class="comments-wrapper no-tags to-hash">
+      <div class="panel-inner-title">讨论区 {{totalCount}}</div>
+      <div class="all-comment-button">全部讨论</div>
+      <ul class="comments comments-item">
+        <li class="comment" v-for="(cont, index) of ugcList" :key="index">
+          <div class="flex-wrapper">
+            <div class="comment-infor">
+              <div class="user-info">
+                <i class="user-avatar"><img :src="cont.userInfo.avatar" ></i>
+                <span class="user-name">{{cont.userInfo.name}}</span>
+              </div>
+              <div class="comment-content">{{cont.content}}</div>
+            </div>
+          </div>
+        </li>
+        <li class="all-comment">
+          <div class="all-text">全部评论</div>
+          <div class="all-count">{{totalCount}}条</div>
+        </li>
+      </ul>
+    </div>
+    <div class="shop-wrapper">
+      <div class="shop-logo is-self"></div>
+      <div class="shop-content">
+        <div class="shop-name">会员购</div>
+        <div class="shop-count">在售商品2725件</div>
+      </div>
+      <div class="follow-button"><b>+</b>关注</div>
+    </div>
+    <div class="to-hash">
+      <div class="partner-detail">
+        <div class="panel-inner-title">商品详情</div>
+        <div class="fee-desc">
+          <span>运费说明：</span>
+          <span>不满足包邮条件的订单，江浙沪地区10元运费，其他地区15元。可配送区域为中国大陆地区(除特殊偏远地区)，收件地址在此之外的区域请勿下单。</span>
+        </div>
+          <van-collapse v-model="activeNames">
+            <van-collapse-item title="商品参数" name="1">
+              <div class="form-item" v-for="(attr, inde) of deta.attrList" :key="inde">
+                <div class="form-item-label">{{attr.attrName}}</div>
+                <div class="form-item-content">{{attr.attrValue}}</div>
+              </div>
+            </van-collapse-item>
+          </van-collapse>
+        </div>
+        <div class="img-detail ql-editor" style="width: 100%;">
+          <div class="desc-wrapper">
+            <img v-for="(Desc, id) of deta.mobileDesc" :key="id" v-lazy="Desc">
+          </div>
+        </div>
+    </div>
+    <div class="mar-top">
+      <div class="partner-package">
+        <div class="panel-inner-title">包装介绍</div>
+        <img class="package-item-url" src="//s1.hdslb.com/bfs/static/mall-c/static/img/1.4dde174.png">
+        <img class="package-item-url" src="//s1.hdslb.com/bfs/static/mall-c/static/img/2.ce05a2c.png">
+        <img class="package-item-url" src="//s1.hdslb.com/bfs/static/mall-c/static/img/3.8a69f1b.png">
+        <div class="package-tips">注意：部分异形或者大件商品除外。</div>
+      </div>
+    </div>
+    <div class="mar-top">
+      <div class="partner-notes">
+        <div class="panel-inner-title">购买须知</div>
+        <div class="note">
+          <h2>关于签收货：</h2>
+          <div>
+            1、在签收快件时，请本人亲自在不拆封商品包装的情况下，在快递前当面验货，确认无误后再签收。
+            <br />
+            2、商品的退换请参考商品售后条款。
+          </div>
+        </div>
+        <div class="note">
+          <h2>关于配送：</h2>
+          <div>
+            1、所有预售商品，如有邮费，需在补款时一并支付。
+            <br />
+            2、商品的可配送区域为中国大陆地区（除特殊偏远地区）。
+            <br />
+            3、平台统一采用高规格包装和配送，最大程度保护商品在配送过程中的安全。
+            <br />
+            4、为确保包裹配送成功，会员购会根据发货地和收件地址匹配合适的物流公司，合作物流可能为顺丰、申通、中通、EMS、邮政等。
+            <br />
+            5、江浙沪地区10元运费，其他地区15元。可配送区域为中国大陆地区（除特殊偏远地区)，收件地址在此之外的区域请勿下单。
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom bottom-typeundefined">
+      <div>
+        <div class="bottom-help">
+          <div id="zhiCustomBtn" class="bottom-help-icon zhiCustomBtn"></div>
+        </div>
+        <router-link to="/cart" tag="div" class="bottom-cart">
+          <div class="bottom-cart-icon"></div>
+        </router-link>
+        <div class="bottom-buy bottom-single">
+          <div class="bottom-buy-button">支付定金</div>
+        </div>
+      </div>
+    </div>
+    <div class="backTop" v-show="flag" @click="backTop">
+        <van-icon size="30px" name="upgrade" color="red" />
+    </div>
   </div>
 </template>
 <script>
 import Vue from 'Vue'
-import { Tab, Tabs, Icon, NavBar, Swipe, SwipeItem, ImagePreview, CountDown, Cell, CellGroup } from 'vant'
+import { Tab, Tabs, Icon, NavBar, Swipe, SwipeItem, ImagePreview, CountDown, Cell, CellGroup, Collapse, CollapseItem } from 'vant'
 import Header from '@/components/Header/Header.vue'
+Vue.use(Collapse).use(CollapseItem)
 Vue.use(Cell).use(CellGroup)
 Vue.use(CountDown)
 Vue.use(Tab).use(Tabs).use(Icon)
@@ -128,7 +232,12 @@ Vue.use(ImagePreview)
 export default {
   data () {
     return {
+      activeNames: ['1'],
       deta: [],
+      totalCount: '',
+      states: [],
+      ugcList: [],
+      price: '',
       index: '',
       name: '',
       solTop: '' * 1,
@@ -136,7 +245,8 @@ export default {
       active2: false,
       active3: false,
       current: 0,
-      time: 6 * 60 * 60 * 1000
+      time: 6 * 60 * 60 * 1000,
+      flag: false
     }
   },
   components: {
@@ -144,33 +254,46 @@ export default {
   },
   mounted () {
     const { id } = this.$route.params
-    fetch('/api/data/detail?itemsId=' + id).then(res => res.json()).then(data => {
+    fetch('/api/detail/items?itemsId=' + id).then(res => res.json()).then(data => {
       this.deta = data
-      this.index = data.imageUrls.length
-      this.name = data.tags.typeAndLimitTagName
+      this.index = data.img.length
+      this.name = data.name
+      this.price = data.advState.deposit
+      this.states = data.advState.state
+      this.totalCount = data.ugcListVO.totalCount
+      this.ugcList = data.ugcListVO.ugcList
     })
     this.$refs.detail.addEventListener('scroll', this.scrollToTop)
-    // console.log(this.$refs.detail)
   },
   methods: {
     onChange (index) {
       this.current = index
     },
+    backTop () {
+      this.$refs.detail.scrollTop = 0
+    },
     scrollToTop () {
       this.solTop = this.$refs.detail.scrollTop
       // console.log(this.solTop)
-      if (this.solTop < 200) {
+      if (this.solTop < 800) {
         this.active1 = true
         this.active2 = false
         this.active3 = false
-      } else if (this.solTop >= 200 && this.solTop < 400) {
+      } else if (this.solTop >= 800 && this.solTop < 1000) {
         this.active1 = false
         this.active2 = true
         this.active3 = false
-      } else if (this.solTop >= 400) {
+      } else if (this.solTop >= 1000) {
         this.active1 = false
         this.active2 = false
         this.active3 = true
+      }
+      if (this.solTop > 500) {
+        // 显示回到顶部图标
+        this.flag = true
+      } else {
+        // 隐藏回到顶部图标
+        this.flag = false
       }
     },
     onClickLeft () {
@@ -183,10 +306,10 @@ export default {
       this.$refs.detail.scrollTop = 0
     },
     CometscrollTop () {
-      this.$refs.detail.scrollTop = 200
+      this.$refs.detail.scrollTop = 800
     },
     DetascrollTop () {
-      this.$refs.detail.scrollTop = 450
+      this.$refs.detail.scrollTop = 1000
     }
   }
 }
@@ -199,6 +322,194 @@ img {
 }
 .van-swipe {
   @include rect(100%, 100%);
+}
+
+.shop-wrapper {
+  @include flexbox();
+  position: relative;
+  padding: 0 12px;
+  margin-top: 10px;
+  height: 60px;
+  background: #fff;
+  .has-followed {
+    border: 0;
+    background-color: rgba(255,86,135, .1);
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    width: 80px;
+    height: 32px;
+    border: 1px solid #fb7299;
+    border-radius: 32px;
+    box-sizing: border-box;
+    text-align: center;
+    font: 16px/28px "";
+    color: #fb7299;
+  }
+  .follow-button {
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    width: 80px;
+    height: 32px;
+    background-color: #fff;
+    border: 1px solid #fb7299;
+    border-radius: 32px;
+    box-sizing: border-box;
+    text-align: center;
+    font: 16px/28px "";
+    color: #fb7299;
+  }
+  .shop-content {
+    margin-left: 10px;
+    margin-right: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    .shop-name {
+      margin-top: 13px;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #212121;
+      letter-spacing: .4px;
+    }
+    .shop-count {
+      margin-top: 3px;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #999;
+      letter-spacing: .4px;
+    }
+  }
+  .is-self {
+    background-image: url(//s1.hdslb.com/bfs/static/mall-c/static/img/detail-selfshop.a86239e.png);
+  }
+  .shop-logo {
+    @include flex(none);
+    margin-top: 13px;
+    height: 35px;
+    width: 35px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    box-sizing: border-box;
+    border-radius: 100px;
+  }
+}
+.comments-wrapper {
+  position: relative;
+  margin-top: 10px;
+  background: #fff;
+  box-sizing: border-box;
+  .all-comment {
+    display: inline-block;
+    height: 120px;
+    width: 120px;
+    background: url(//s1.hdslb.com/bfs/static/mall-c/static/img/all-comments.2f35f82.png) no-repeat;
+    background-size: 100% 100%;
+    vertical-align: top;
+    .all-text {
+      margin: 44px auto 0;
+      box-sizing: border-box;
+      width: 58px;
+      padding-bottom: 7.5px;
+      border-bottom: 1px solid #979797;
+      color: #999;
+      letter-spacing: 0;
+      text-align: center;
+      font: 14px/14px "";
+    }
+    .all-count {
+      margin-top: 5.5px;
+      font: 12px/12px "";
+      color: #999;
+      letter-spacing: 0;
+      text-align: center;
+    }
+  }
+  .comment-content {
+    display: -webkit-box;
+    margin-top: 10px;
+    font: 12px/18px "";
+    color: #212121;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    @include ellipsis(100%, 3);
+  }
+  .user-avatar, .user-name {
+    display:inline-block;
+    font: 13px/24px "";
+    color: #757575;
+    vertical-align: top;
+    margin-left: 4px;
+  }
+  .user-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .user-info {
+    font-size: 0;
+    white-space: nowrap;
+  }
+  .comment-infor {
+    @include flex();
+    padding: 10px;
+  }
+  .flex-wrapper {
+    @include flexbox();
+  }
+  .comment {
+    display: inline-block;
+    height: 120px;
+    width: 280px;
+    margin-right: 10px;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
+    border-radius: 7px;
+    background: #fff;
+    vertical-align: top;
+  }
+  .comments-item {
+    margin-top: -2px;
+  }
+  .comments {
+    padding: 6px 12px 12px;
+    overflow: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    font-size: 0;
+    @include transform(translateZ(0));
+  }
+  .all-comment-button {
+    position: absolute;
+    right: 12px;
+    top: 16px;
+    font: 12px/12px "";
+    color: #fb7299;
+    letter-spacing: 0;
+  }
+  .panel-inner-title {
+    position: relative;
+    padding: 16px 0 12px 12px!important;
+    font: 700 14px/14px "";
+    color: #212121;
+  }
+  .panel-inner-title:before {
+    position: absolute;
+    left: 0;
+    top: 16px;
+    display: block;
+    width: 4px;
+    height: 14px;
+    content: "";
+    background: #fb7299;
+    border-radius:0 2px 2px 0;
+  }
 }
 .procedure-wrapper {
   padding: 0 12px;
@@ -376,6 +687,72 @@ img {
     }
   }
 }
+.to-hash {
+  position: relative;
+  margin-top: 10px;
+  background-color: #fff;
+  .fee-desc {
+    position: relative;
+    margin: 0 12px 16px;
+    padding: 6px 10px;
+    span {
+      font: 12px/18px "";
+      color: #999;
+    }
+  }
+  .fee-desc:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    content: "";
+    height: 200%;
+    width: 200%;
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+  }
+  .ql-editor {
+    box-sizing: border-box;
+    line-height: 1.42;
+    outline: none;
+    overflow-y: auto;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding-bottom: 12px;
+    padding-top: 12px;
+  }
+  .img-detail * {
+    max-width: 100%;
+    vertical-align: top;
+  }
+  .ql-editor > * {
+    cursor: text;
+  }
+}
+.panel-inner-title {
+  position: relative;
+  padding: 16px 0 12px 12px!important;
+  color: #212121;
+  font: 700 14px/14px "";
+}
+.panel-inner-title:before {
+  position: absolute;
+  left: 0;
+  top: 16px;
+  display: block;
+  width: 4px;
+  height: 14px;
+  content: "";
+  background: #fb7299;
+  border-radius: 0 2px 2px 0;
+}
 .custom-indicator {
   position: absolute;
   bottom: 0;
@@ -548,5 +925,132 @@ img {
   border-radius: 50%;
   background-color: #fff;
   color: #000;
+}
+.form-item {
+  margin: 0 12px;
+  position: relative;
+  @include flexbox();
+  font: 12px/28px "";
+  color: #212121;
+  background: #f9f9f9;
+  border-top: 1px solid #fff;
+  border-radius: 1px;
+  .form-item-label {
+    width: 80px;
+    letter-spacing: 0;
+    box-sizing: border-box;
+    border-right: 1px solid #fff;
+    text-overflow: ellipsis;
+  }
+  .form-item-content, .form-item-label {
+    padding-left: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+.mar-top {
+  margin-top: 12px;
+  padding-top:0px;
+  position: relative;
+  background-color: #fff;
+  .partner-package {
+    padding: 0 12px 10px;
+    position: relative;
+    font-size: 12px;
+    color: #757575;
+    letter-spacing: 0;
+    line-height: 20px;
+    .panel-inner-title {
+      margin-left: -12px;
+    }
+    .package-item-url {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .package-tips {
+      margin-top: 10px;
+      font: 12px/20px "";
+      color: #757575;
+      letter-spacing: 0;
+    }
+  }
+}
+.partner-notes {
+  font-size: 12px;
+  color: #757575;
+  letter-spacing: .5px;
+  position: relative;
+  .note {
+    padding:0 20px;
+    font: 12px/20px "";
+    color: #757575;
+    letter-spacing: 0;
+    h2 {
+      font: 12px/12px "";
+      color: #212121;
+      letter-spacing: 0;
+      margin:0 0 10px;
+      position: relative;
+    }
+  }
+  .note:nth-of-type(2) {
+    margin-top: 4px;
+  }
+}
+.bottom {
+    position: fixed;
+    padding-bottom: 12px;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 -1px 0 0 rgba(0,0,0,.08);
+    z-index: 100;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+.bottom>div {
+  @include flexbox();
+  height: 50px;
+}
+.bottom-cart, .bottom-help {
+  position: relative;
+  width: 54px;
+}
+.bottom-add, .bottom-buy {
+  @include flex();
+}
+.bottom-buy {
+  padding: 10px 12px 0 6px;
+}
+.bottom-single {
+  padding-left: 18px;
+}
+.bottom-help-icon {
+  left: 20px;
+  background: url(//s1.hdslb.com/bfs/static/mall-c/static/img/icon-help.1b14df6.svg) no-repeat;
+  background-size: 100%;
+}
+.bottom-cart-icon {
+  left: 12px;
+  background: url(//s1.hdslb.com/bfs/static/mall-c/static/img/icon-cart.3e1c645.svg) no-repeat;
+  background-size: 100%;
+}
+.bottom-buy-button {
+  white-space: nowrap;
+  background-image: -webkit-linear-gradient(326deg,#fb7299,#fb7299);
+  background-image: linear-gradient(-236deg,#fb7299,#fb7299);
+  box-shadow: 0 2px 4px 0 rgba(255,100,145,.7);
+  border-radius: 100px;
+  font-size: 14px;
+  color: #fff;
+  line-height: 40px;
+  text-align: center;
+}
+.bottom-cart-icon, .bottom-help-icon {
+  position: absolute;
+  top: 19px;
+  width: 22px;
+  height: 22px;
 }
 </style>

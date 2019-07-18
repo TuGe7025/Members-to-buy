@@ -18,15 +18,15 @@
         <div class="bar">
           <ul>
             <li @click="comp" :class="zh ? 'active':''">综合</li>
-            <li @click="sales" :class="xl ? 'active':''">销量</li>
-            <li class="price">
+            <li @click="sales" :class="xl ? 'active':''">人气</li>
+            <li @click="maxPrice" :class="max ? 'price active':'price'">
               <span>价格</span>
               <div class="icon-box">
                 <i></i>
                 <i></i>
               </div>
             </li>
-            <li class="in-stock">
+            <!-- <li class="in-stock">
               <div class="area"></div>
               <div class="bar"></div>
               <div class="word">现货</div>
@@ -34,7 +34,7 @@
             <li class="filter">
               筛选
               <i></i>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -53,7 +53,8 @@ export default {
       goodsList: [],
       garagelist: [],
       zh: false,
-      xl: false
+      xl: false,
+      max: false
     }
   },
   components: {
@@ -69,18 +70,29 @@ export default {
     onClickLeft () {
       this.$router.back()
     },
-    sales () {
+    maxPrice () {
       this.zh = false
-      this.xl = true
-      fetch('/api/garage/sale')
+      this.xl = false
+      this.max = true
+      fetch('/api/garage/maxprice')
         .then(res => res.json()).then(data => {
           console.log(data)
           this.garagelist = data
         })
     },
+    sales () {
+      this.max = false
+      this.zh = false
+      this.xl = true
+      fetch('/api/garage/sale')
+        .then(res => res.json()).then(data => {
+          this.garagelist = data
+        })
+    },
     comp () {
-      this.zh = true
+      this.max = false
       this.xl = false
+      this.zh = true
       fetch('/api/garage')
         .then(res => res.json()).then(data => {
           console.log(data)
