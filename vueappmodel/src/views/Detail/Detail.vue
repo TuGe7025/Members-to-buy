@@ -121,7 +121,7 @@
           <div class="flex-wrapper">
             <div class="comment-infor">
               <div class="user-info">
-                <i class="user-avatar"><img :src="cont.userInfo.avatar" ></i>
+                <i class="user-avatar"><img v-lazy="cont.userInfo.avatar" ></i>
                 <span class="user-name">{{cont.userInfo.name}}</span>
               </div>
               <div class="comment-content">{{cont.content}}</div>

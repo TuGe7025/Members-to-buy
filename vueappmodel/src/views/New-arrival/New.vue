@@ -13,7 +13,7 @@
         <div class='content-day' >{{item.dayNO}} {{item.weekDay}}</div>
         <div class="content-info"  v-for='(itm,ind) of item.presaleItems' :key='ind'>
           <div class="content-info-left">
-            <img :src="itm.img" alt="">
+            <img v-lazy="itm.img" alt="">
           </div>
           <div class="content-info-right">
             <div class="brief">
@@ -105,7 +105,7 @@ export default {
       @include rect(100%, 1.37rem);
       background-color: #fff;
       .content-info-left {
-        @include rect(1.16rem, 1.27rem);       
+        @include rect(1.16rem, 1.27rem);
         margin: 0.1rem 0 0 0.12rem;
         img {
           @include rect(1.16rem, 1.16rem);
@@ -153,7 +153,7 @@ export default {
             font-size: 12px;
             font-weight: 200;
             margin-left:1rem;
-            color: #999; 
+            color: #999;
           }
         }
       }
