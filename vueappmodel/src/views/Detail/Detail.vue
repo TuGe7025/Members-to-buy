@@ -225,17 +225,17 @@
         <van-icon name="cross" />
       </div>
       <div class="popup-img">
-        <img src='' alt="">
+        <img :src='img' alt="">
       </div>
       <div class="info">
         <div class="info-i">
           <span class="i-top">￥</span>
-          <span class="i-buttom"></span>
+          <span class="i-buttom">{{deta.price}}</span>
         </div>
       </div>
       <div  class="spec-container">
         <h4 >规格</h4>
-        <div class="spec">figure</div>
+        <div class="spec">{{deta.brandName}}</div>
       </div>
       <div class="spec-container-info">
         <h4>数量确认</h4>
@@ -273,6 +273,7 @@ export default {
       totalCount: '',
       states: [],
       ugcList: [],
+      img: '',
       price: '',
       index: '',
       name: '',
@@ -293,8 +294,10 @@ export default {
     const { id } = this.$route.params
     fetch('/api/detail/items?itemsId=' + id).then(res => res.json()).then(data => {
       this.deta = data
+      console.log(data)
       this.index = data.img.length
       this.name = data.name
+      this.img =data.img[0]
       this.price = data.advState.deposit
       this.states = data.advState.state
       this.totalCount = data.ugcListVO.totalCount
@@ -1186,5 +1189,19 @@ img {
     text-align: center;
     line-height: 40px;
   }
+}
+.info-i>span {
+  color: #fb7299;
+}
+.spec {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 32px;
+  font-size: 12px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 18px;
+  border-color: #fb7299;
+  color: #fb7299;
 }
 </style>
