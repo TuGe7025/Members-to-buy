@@ -7,11 +7,11 @@
         @click-left="onClickLeft"
       />
     </header>
-    <div class="date-fixed">7月18日 周四</div>
+    <!-- <div class="date-fixed">7月18日 周四</div> -->
     <div class="content">
       <div class="content-data" v-for='(item,index) of days' :key='index'>
         <div class='content-day' >{{item.dayNO}} {{item.weekDay}}</div>
-        <div class="content-info"  v-for='(itm,ind) of item.presaleItems' :key='ind'>
+        <div class="content-info" @click='goDetail(itm.itemsId)'  v-for='(itm,ind) of item.presaleItems' :key='ind'>
           <div class="content-info-left">
             <img v-lazy="itm.img" alt="">
           </div>
@@ -46,6 +46,9 @@ export default {
   methods: {
     onClickLeft () {
       this.$router.back()
+    },
+    goDetail (id) {
+      this.$router.push({ path: '/detail/' + id })
     }
   },
   mounted () {
@@ -59,6 +62,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/lib/reset.scss";
+header {
+  height: 0.44rem;
+}
 .van-hairline--bottom {
   @include rect(100%, 0.44rem);
   @include background-color(#fb7299);

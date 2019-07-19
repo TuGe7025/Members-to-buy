@@ -1,5 +1,9 @@
 <template>
   <div class="detail" id="detail" ref="detail">
+    <van-overlay
+      :show="show"
+      @click="show = false"
+    />
     <Header ref="header" :solTop="solTop">
       <span @click="onClickLeft" slot="nav-left" class="nav-left"></span>
       <span slot="sop" @click="SopscrollTop" :class="active1 ? 'active':''">商品</span>
@@ -209,19 +213,49 @@
           <div class="bottom-cart-icon"></div>
         </router-link>
         <div class="bottom-buy bottom-single">
-          <div class="bottom-buy-button">支付定金</div>
+          <div class="bottom-buy-button" @click="buy" >支付定金</div>
         </div>
       </div>
     </div>
     <div class="backTop" v-show="flag" @click="backTop">
         <van-icon size="30px" name="upgrade" color="red" />
     </div>
+    <div class="sku" v-show='show'>
+      <div class="popup-close" @click='shop'>
+        <van-icon name="cross" />
+      </div>
+      <div class="popup-img">
+        <img src='' alt="">
+      </div>
+      <div class="info">
+        <div class="info-i">
+          <span class="i-top">￥</span>
+          <span class="i-buttom"></span>
+        </div>
+      </div>
+      <div  class="spec-container">
+        <h4 >规格</h4>
+        <div class="spec">figure</div>
+      </div>
+      <div class="spec-container-info">
+        <h4>数量确认</h4>
+        <div class="spec-num">
+          <span class="qian spec-num-info">-</span>
+          <span class="num">1</span>
+          <span class="add spec-num-info">+</span>
+        </div>
+      </div>
+      <div  class="button-container">
+        <div class="button">加入购物车</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import Vue from 'Vue'
-import { Tab, Tabs, Icon, NavBar, Swipe, SwipeItem, ImagePreview, CountDown, Cell, CellGroup, Collapse, CollapseItem } from 'vant'
+import { Tab, Tabs, Icon, NavBar, Swipe, SwipeItem, ImagePreview, CountDown, Cell, CellGroup, Collapse, CollapseItem, Overlay } from 'vant'
 import Header from '@/components/Header/Header.vue'
+// import Sku from '@/components/sku/sku.vue'
 Vue.use(Collapse).use(CollapseItem)
 Vue.use(Cell).use(CellGroup)
 Vue.use(CountDown)
@@ -229,6 +263,8 @@ Vue.use(Tab).use(Tabs).use(Icon)
 Vue.use(NavBar)
 Vue.use(Swipe).use(SwipeItem)
 Vue.use(ImagePreview)
+Vue.use(Overlay)
+// Vue.use(Sku)
 export default {
   data () {
     return {
@@ -246,7 +282,8 @@ export default {
       active3: false,
       current: 0,
       time: 6 * 60 * 60 * 1000,
-      flag: false
+      flag: false,
+      show: false
     }
   },
   components: {
@@ -266,6 +303,12 @@ export default {
     this.$refs.detail.addEventListener('scroll', this.scrollToTop)
   },
   methods: {
+    buy () {
+      this.show = true
+    },
+    shop () {
+      this.show = false
+    },
     onChange (index) {
       this.current = index
     },
@@ -1052,5 +1095,96 @@ img {
   top: 19px;
   width: 22px;
   height: 22px;
+}
+.sku {
+  position: fixed;
+  width: 95%;
+  margin-left: 0.1rem;
+  height: 2.8rem;
+  bottom: 0;
+  z-index: 999;
+  background: #fff;
+  .popup-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-image: -webkit-linear-gradient(top,#fff 12%,#f5f5f5);
+    background-image: linear-gradient(-180deg,#fff 12%,#f5f5f5);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    z-index: 10002;
+    text-align: center;
+    line-height: 40px;
+    i {
+      font-size: 16px;
+    }
+  }
+  .popup-img {
+    position: absolute;
+    top: -31px;
+    left: 12px;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,.3);
+    border-radius: 4px;
+    z-index: 10002;
+    background-size: cover;
+  }
+  .info {
+    margin-left: 1.26rem;
+    height: 0.52rem;
+    margin-top:0.2rem;
+  }
+}
+.spec-container {
+  width: 95%;
+  height: 0.73rem;
+  margin: 0.3rem auto 0;
+}
+.spec-container-info {
+  overflow: hidden;
+  width: 95%;
+  height: 0.43rem;
+  padding: 6px 0;
+  margin: 0 auto;
+  justify-content: space-between;
+  display: flex;
+}
+.spec-num-info {
+  margin-right: 10px;
+  margin-left:10px;
+  color: #212121;
+  letter-spacing: 0;
+  line-height: 32px;
+  min-width: 20px;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  font-size: 24px;
+  border:1px solid #ccc;
+  border-radius: 50%;
+}
+.button-container {
+  box-sizing: border-box;
+  padding: 12px;
+  width: 100%;
+  height: 64px;
+  background-image: linear-gradient(180deg,#e7e7e7,#e7e7e7 50%,transparent 0);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  .button {
+    height: 100%;
+    background-color: #fb7299;
+    box-shadow: 0 2px 4px 0 rgba(255,100,145,.7);
+    border-radius: 36px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    line-height: 40px;
+  }
 }
 </style>

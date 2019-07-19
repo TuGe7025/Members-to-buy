@@ -38,6 +38,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+header,.van-hairline--bottom {
+  height: 0.44rem;
+  background: #fb7299;
+}
 .img {
   width: 2.8rem;
   height: 1.44rem;
@@ -50,14 +54,18 @@ export default {
   color: #999;
   font-size: 16px;
 }
-.van-icon-arrow-left{
+.van-icon-arrow-left {
   font-size: 20px;
-  color: #858080;
+  color: #fff;
+}
+.van-nav-bar__title {
+  color: #fff;
+  font-size: 16px;
 }
 .van-nav-bar__right {
   span {
     font-size: 20px;
-    color: #858080;
+    color: #fff;
   }
 }
 </style>

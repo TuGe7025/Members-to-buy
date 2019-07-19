@@ -64,6 +64,7 @@ export default {
     fetch('/api/garage')
       .then(res => res.json()).then(data => {
         this.garagelist = data
+        console.log(data)
       })
   },
   methods: {

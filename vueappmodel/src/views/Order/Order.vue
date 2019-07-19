@@ -53,7 +53,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/lib/reset.scss";
 #app,
 .contaiter {
@@ -73,14 +73,18 @@ export default {
 .van-hairline--bottom {
   @include rect(100%, 0.44rem);
 }
- .van-icon.van-icon-arrow-left {
+ .van-icon.van-icon-arrow-left{
   @include font-size(20px);
-  @include color(#858080)
+  @include color(#ffff)
+}
+.van-nav-bar__title {
+  color: #fff;
+  font-size: 16px;
 }
 .van-nav-bar__right {
   span {
     @include font-size(20px);
-    color: #858080;
+    color: #fff;
   }
 }
 .order-header {
