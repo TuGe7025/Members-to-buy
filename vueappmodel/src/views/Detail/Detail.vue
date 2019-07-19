@@ -292,7 +292,7 @@ export default {
   },
   mounted () {
     const { id } = this.$route.params
-    fetch('/api/detail/items?itemsId=' + id).then(res => res.json()).then(data => {
+    fetch('api/detail/items?itemsId=' + id).then(res => res.json()).then(data => {
       this.deta = data
       console.log(data)
       this.index = data.img.length
