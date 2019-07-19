@@ -80,6 +80,9 @@ export default {
 }
 .van-icon-arrow-left {
   @include font-size(20px);
-  color: #858080;
+  color: #fff;
+}
+.van-nav-bar__title {
+  color:#fff;
 }
 </style>

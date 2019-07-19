@@ -121,17 +121,21 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/lib/reset.scss";
 #app,
 .contaiter {
   @include flexbox();
   @include flex-direction(column);
 }
+.van-sidebar-item__text,.van-hairline {
+  color:#999;
+}
 .contaiter {
   @include flex();
-  @include rect(100%, auto);
+  overflow: hidden;
   @include flexbox();
+  @include rect(100%, 100%);
   @include flex-direction(column);
   .kind {
     @include flex();
