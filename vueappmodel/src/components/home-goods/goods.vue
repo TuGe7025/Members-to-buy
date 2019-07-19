@@ -1,6 +1,6 @@
 <template>
 <div class="box">
-  <router-link tag="div" :to = "{name: 'detail', params: {id: list.itemsId}}" v-for="(list, index) of feeds" :key="index">
+  <router-link tag="div" :to="{ name: 'detail', params: { id: list.itemsId } }" v-for="(list, index) of feeds" :key="index">
     <div v-if="list.templateId === 4">
       <div class="home-content-goods">
         <div class="goods-img">

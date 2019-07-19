@@ -1,13 +1,5 @@
 <template>
   <div class="garage">
-    <!-- <header class="g-header">
-      <div class="main-head">
-        <i></i>
-        <div class="title">手办</div>
-        <i></i>
-        <i></i>
-      </div>
-    </header> -->
     <van-nav-bar
         title="手办"
         left-arrow
@@ -26,15 +18,6 @@
                 <i></i>
               </div>
             </li>
-            <!-- <li class="in-stock">
-              <div class="area"></div>
-              <div class="bar"></div>
-              <div class="word">现货</div>
-            </li>
-            <li class="filter">
-              筛选
-              <i></i>
-            </li> -->
           </ul>
         </div>
       </div>
@@ -61,7 +44,7 @@ export default {
     List
   },
   mounted () {
-    fetch('/api/garage')
+    fetch('api/garage')
       .then(res => res.json()).then(data => {
         this.garagelist = data
       })
@@ -74,9 +57,8 @@ export default {
       this.zh = false
       this.xl = false
       this.max = true
-      fetch('/api/garage/maxprice')
+      fetch('api/garage/maxprice')
         .then(res => res.json()).then(data => {
-          console.log(data)
           this.garagelist = data
         })
     },
@@ -84,7 +66,7 @@ export default {
       this.max = false
       this.zh = false
       this.xl = true
-      fetch('/api/garage/sale')
+      fetch('api/garage/sale')
         .then(res => res.json()).then(data => {
           this.garagelist = data
         })
@@ -93,7 +75,7 @@ export default {
       this.max = false
       this.xl = false
       this.zh = true
-      fetch('/api/garage')
+      fetch('api/garage')
         .then(res => res.json()).then(data => {
           console.log(data)
           this.garagelist = data

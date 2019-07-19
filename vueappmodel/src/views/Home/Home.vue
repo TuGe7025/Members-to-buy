@@ -77,7 +77,7 @@ export default {
     Goods
   },
   mounted () {
-    fetch('/api/data/datalist')
+    fetch('api/data/datalist')
       .then(res => res.json()).then(data => {
         this.nav = data[0].data.vo.tabs
         this.feeds = data[0].data.vo.feeds.list
@@ -101,7 +101,7 @@ export default {
     },
     onRefresh () {
       this.isLoading = true
-      fetch('/api/data/findlist').then(res => res.json()).then(data => {
+      fetch('api/data/findlist').then(res => res.json()).then(data => {
         this.isLoading = false // 下拉刷新结束
         this.feeds = data[0].data.vo.feeds.list // 重置列表的数据
         this.pageNum = 1 // 重置页码 --- 下拉刷新相当于第一页数据
@@ -111,7 +111,7 @@ export default {
     onLoad () {
       // console.log('可以加载数据了')
       this.loading = true // 开始加载数据
-      fetch('/api/data/findlist?pageNum=' + this.pageNum)
+      fetch('api/data/findlist?pageNum=' + this.pageNum)
         .then(res => res.json()).then(data => {
           this.loading = false // 数据加载完毕
           this.pageNum++

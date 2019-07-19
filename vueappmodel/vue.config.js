@@ -1,9 +1,10 @@
 // vue.config.js
 module.exports = {
+  publicPath: './',
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://10.11.56.83:3000',
+        target: 'http://47.94.144.87:3000',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
