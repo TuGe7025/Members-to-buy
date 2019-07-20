@@ -4,6 +4,16 @@
     <router-view name="footer"></router-view>
   </div>
 </template>
+<script>
+export default {
+  mounted () {
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('messageStore', JSON.stringify(this.$store.state))
+    })
+    localStorage.getItem('messageStore') && this.$store.replaceState(Object.assign(this.$store.state, JSON.parse(localStorage.getItem('messageStore'))))
+  }
+}
+</script>
 
 <style lang="scss">
 @import '@/lib/reset.scss';

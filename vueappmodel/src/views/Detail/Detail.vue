@@ -240,20 +240,20 @@
       <div class="spec-container-info">
         <h4>数量确认</h4>
         <div class="spec-num">
-          <span class="qian spec-num-info">-</span>
-          <span class="num">1</span>
-          <span class="add spec-num-info">+</span>
+          <span class="qian spec-num-info" @click="deta.shopMode >= 2 ? deta.shopMode -= 1 : deta.shopMode = 1">-</span>
+          <span class="num">{{deta.shopMode}}</span>
+          <span class="add spec-num-info" @click="deta.shopMode += 1">+</span>
         </div>
       </div>
       <div  class="button-container">
-        <div class="button">加入购物车</div>
+        <div class="button" @click="cart(deta.itemsId)">加入购物车</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Vue from 'Vue'
-import { Tab, Tabs, Icon, NavBar, Swipe, SwipeItem, ImagePreview, CountDown, Cell, CellGroup, Collapse, CollapseItem, Overlay } from 'vant'
+import { Tab, Tabs, Icon, NavBar, Swipe, SwipeItem, ImagePreview, CountDown, Cell, CellGroup, Collapse, CollapseItem, Overlay, Toast } from 'vant'
 import Header from '@/components/Header/Header.vue'
 // import Sku from '@/components/sku/sku.vue'
 Vue.use(Collapse).use(CollapseItem)
@@ -264,7 +264,7 @@ Vue.use(NavBar)
 Vue.use(Swipe).use(SwipeItem)
 Vue.use(ImagePreview)
 Vue.use(Overlay)
-// Vue.use(Sku)
+Vue.use(Toast)
 export default {
   data () {
     return {
@@ -284,7 +284,8 @@ export default {
       current: 0,
       time: 6 * 60 * 60 * 1000,
       flag: false,
-      show: false
+      show: false,
+      prices: ''
     }
   },
   components: {
@@ -297,11 +298,13 @@ export default {
       console.log(data)
       this.index = data.img.length
       this.name = data.name
-      this.img =data.img[0]
-      this.price = data.advState.deposit
+      this.img = data.img[0]
+      this.price = (data.price / 5).toFixed(1)
+      this.prices = data.price
       this.states = data.advState.state
       this.totalCount = data.ugcListVO.totalCount
       this.ugcList = data.ugcListVO.ugcList
+      console.log(this.price)
     })
     this.$refs.detail.addEventListener('scroll', this.scrollToTop)
   },
@@ -311,6 +314,25 @@ export default {
     },
     shop () {
       this.show = false
+    },
+    cart (id) {
+      const { $store: { state: { loginSation } } } = this
+      if (loginSation === 'ok') {
+        Toast.success('成功加入购物车')
+        this.show = false
+        const listdata = {
+          'id': this.deta.itemsId,
+          'names': this.name,
+          'imgs': this.img,
+          'prices': Number(this.prices),
+          'brandname': this.deta.brandName,
+          'shop': Number(this.deta.shopMode),
+          'flag': true
+        }
+        this.$store.commit('changeCartList', listdata)
+      } else {
+        this.$router.push('/login')
+      }
     },
     onChange (index) {
       this.current = index

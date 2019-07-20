@@ -9,8 +9,8 @@
         />
       </header>
       <div class="cart-content" >
-        <cartList />
-        <div class="cart-item" v-show='falg'>
+        <cartList v-if="disnone"/>
+        <div class="cart-item" v-else>
           <div class="cart-img"></div>
           <p class="cart-title">购物车里面空空如也</p>
         </div>
@@ -22,12 +22,27 @@
 import Vue from 'vue'
 import { NavBar } from 'vant'
 import cartList from '@/components/cartList/cartList'
+import { mapState } from 'vuex'
 
 Vue.use(NavBar)
 export default {
   data () {
     return {
-      falg: true
+      // falg: true,
+      disnone: false
+    }
+  },
+  computed: {
+    ...mapState({
+      cartlist (state) {
+        return state.cartlist
+      }
+    }),
+    totalNum () {
+      return this.$store.getters.totalNum
+    },
+    totalPrice () {
+      return this.$store.getters.totalPrice
     }
   },
   components: {
@@ -37,6 +52,13 @@ export default {
     onClickLeft () {
       this.$router.back()
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (vm.cartlist.length > 0) {
+        vm.disnone = true
+      }
+    })
   }
 }
 </script>
@@ -45,6 +67,9 @@ export default {
 #app,.contaiter {
   @include flexbox();
   @include flex-direction(column);
+}
+.cart {
+  overflow: hidden;
 }
 .contaiter {
   @include flex();
