@@ -411,7 +411,8 @@ img {
     border-radius: 32px;
     box-sizing: border-box;
     text-align: center;
-    font: 16px/28px "";
+    font-size: 16px;
+    line-height: 28px;
     color: #fb7299;
   }
   .follow-button {
@@ -425,7 +426,8 @@ img {
     border-radius: 32px;
     box-sizing: border-box;
     text-align: center;
-    font: 16px/28px "";
+    font-size: 16px;
+    line-height: 28px;
     color: #fb7299;
   }
   .shop-content {
@@ -486,11 +488,13 @@ img {
       color: #999;
       letter-spacing: 0;
       text-align: center;
-      font: 14px/14px "";
+      font-size: 14px;
+      line-height: 14px;
     }
     .all-count {
       margin-top: 5.5px;
-      font: 12px/12px "";
+      font-size: 12px;
+      line-height: 12px;
       color: #999;
       letter-spacing: 0;
       text-align: center;
@@ -499,7 +503,8 @@ img {
   .comment-content {
     display: -webkit-box;
     margin-top: 10px;
-    font: 12px/18px "";
+    font-size: 12px;
+    line-height: 18px;
     color: #212121;
     white-space: normal;
     -webkit-box-orient: vertical;
@@ -510,7 +515,8 @@ img {
   }
   .user-avatar, .user-name {
     display:inline-block;
-    font: 13px/24px "";
+    font-size: 13px;
+    line-height: 14px;
     color: #757575;
     vertical-align: top;
     margin-left: 4px;
@@ -557,14 +563,17 @@ img {
     position: absolute;
     right: 12px;
     top: 16px;
-    font: 12px/12px "";
+    font-size: 12px;
+    line-height: 12px;
     color: #fb7299;
     letter-spacing: 0;
   }
   .panel-inner-title {
     position: relative;
     padding: 16px 0 12px 12px!important;
-    font: 700 14px/14px "";
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
     color: #212121;
   }
   .panel-inner-title:before {
@@ -657,7 +666,8 @@ img {
       }
     }
     .procedure-active {
-      font: 14px/14px "";
+      font-size: 14px;
+      line-height: 14px;
       color: #fb7299;
     }
   }
@@ -692,7 +702,8 @@ img {
   padding: 10px 12px 12px;
   .main-title {
     margin: 0;
-    font: 16px/22px "";
+    font-size: 16px;
+    line-height: 22px;
     color: #212121;
     letter-spacing: .53px;
     @include ellipsis(100%, 2);
@@ -715,7 +726,8 @@ img {
       position: relative;
       margin-top: 10px;
       letter-spacing: 0;
-      font: 16px/40px "";
+      font-size: 16px;
+      line-height: 40px;
       color: #fb7299;
       height: 40px;
       box-sizing: border-box;
@@ -732,11 +744,13 @@ img {
       }
       .price-value {
         margin-right: 6px;
-        font: 40px/40px "";
+        font-size: 40px;
+        line-height: 40px;
         color: #fb7299;
         letter-spacing: 0;
         .currency-type {
-          font: 24px/24px "";
+          font-size: 24px;
+          line-height: 24px;
           margin-right: 4px;
           position: relative;
           top: 0;
@@ -746,7 +760,8 @@ img {
         position: relative;
         top: -3px;
         display: inline-block;
-        font: 28px/28px "";
+        font-size: 28px;
+        line-height: 28px;
         color: #757575;
         letter-spacing: 0;
         height: auto;
@@ -764,7 +779,8 @@ img {
     margin: 0 12px 16px;
     padding: 6px 10px;
     span {
-      font: 12px/18px "";
+      font-size: 12px;
+      line-height: 18px;
       color: #999;
     }
   }
@@ -808,7 +824,9 @@ img {
   position: relative;
   padding: 16px 0 12px 12px!important;
   color: #212121;
-  font: 700 14px/14px "";
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 700;
 }
 .panel-inner-title:before {
   position: absolute;
@@ -896,13 +914,15 @@ img {
     }
     .price-left {
       height: 14px;
-      font: 0/14px "";
+      font-size: 0px;
+      line-height: 14px;
       color:#fff;
       display: inline-block;
       letter-spacing: 0;
       .price-label {
         margin-right: 8px;
-        font: 14px/14px "";
+        font-size: 14px;
+        line-height: 14px;
         display: inline-block;
       }
     }
@@ -913,7 +933,8 @@ img {
     @include padding(8px 0);
     box-sizing: border-box;
     .remain-tips {
-      font: 12px/12px "";
+      font-size: 12px;
+      line-height: 12px;
       color: #fb7299;
       text-align: center;
       letter-spacing: 0;
@@ -923,10 +944,13 @@ img {
       margin-top: 6px;
       color: #fb7299;
       letter-spacing: 0;
-      font: 700 16px/16px "";
+      font-size: 16px;
+      line-height: 16px;
       span {
         letter-spacing: 0;
-        font: 400 12px/12px "";
+        font-size: 12px;
+        line-height: 12px;
+        font-weight: 700;
       }
     }
   }

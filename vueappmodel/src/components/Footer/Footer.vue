@@ -35,7 +35,8 @@
       }
     @include flex();
     i {
-      font: 18px/18px "";
+      font-size: 18px;
+      line-height: 18px;
     }
     p {
       font-size: 12px;
