@@ -41,6 +41,9 @@ export default {
     totalNum () {
       return this.$store.getters.totalNum
     },
+    list () {
+      return this.$store.getters.list
+    },
     totalPrice () {
       return this.$store.getters.totalPrice
     }
@@ -64,6 +67,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/lib/reset.scss";
+.van-icon {
+  @include font-size(20px);
+  color: #fff;
+}
 #app,.contaiter {
   @include flexbox();
   @include flex-direction(column);
@@ -77,6 +84,7 @@ export default {
   @include flexbox();
   @include flex-direction(column);
   .cart-content {
+    margin-top:44px;
     @include flex();
     @include rect(100%, auto);
     .cart-item {
@@ -100,12 +108,11 @@ export default {
   }
 }
 .cart-header,.van-hairline--bottom {
-    @include rect(100%, 0.44rem);
-    background: #fb7299;
-}
-.van-icon-arrow-left {
-  @include font-size(20px);
-  color: #fff;
+  position: fixed;
+  top:0;
+  left:0;
+  @include rect(100%, 0.44rem);
+  background: #fb7299;
 }
 .van-nav-bar__title {
   color:#fff;

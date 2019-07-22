@@ -54,7 +54,6 @@ export default {
   mounted () {
     fetch('api/news').then(res => res.json()).then(data => {
       let date = data[0].data.vo.days
-      console.log(date)
       this.days = date
     })
   }

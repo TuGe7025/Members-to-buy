@@ -141,7 +141,8 @@ export default {
     @include background-color(#fb7299);
     .home-header-cont {
       height: .44rem;
-      font: .16rem/.44rem "";
+      font-size: 16px;
+      line-height: 44px;
       text-align: center;
       color: #fff;
     }
@@ -219,7 +220,8 @@ export default {
           @include rect(100%, .32rem);
           .expo-head-title {
             padding-left: .02rem;
-            font: .12rem/.32rem "";
+            font-size: 12px;
+            line-height: 32px;
             color: #757575;
           }
           i {
@@ -252,21 +254,24 @@ export default {
           }
           .expo-main-name {
             margin-bottom: .05rem;
-            font: .16rem/.24rem "";
+            font-size: 16px;
+      line-height: 24px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
           .expo-main-info {
             margin-bottom: .1rem;
-            font: .12rem/.17rem "";
+            font-size: 12px;
+      line-height: 17px;
             color: #999;
             @include ellipsis(100%, 2);
           }
           .expo-main-price {
             height: .18rem;
             color: #ff5687;
-            font: 0px/.18rem;
+            font-size: 0px;
+      line-height: 18px;
             letter-spacing: 0;
             .symbol {
               font-size: .14rem;
@@ -292,13 +297,15 @@ export default {
           @include margin(0 .11rem 0 .08rem);
           .desc {
             margin-bottom: .1rem;
-            font: .16rem/.22rem "";
+            font-size: 16px;
+      line-height: 22px;
             @include ellipsis(100%, 2);
           }
           .brief {
             @include ellipsis();
             height: .12rem;
-            font: .12rem/.12rem "";
+            font-size: 12px;
+      line-height: 12px;
           }
         }
         .price {
@@ -306,7 +313,8 @@ export default {
           bottom: .12rem;
           left: .08rem;
           height: 18px;
-          font: 0px/.12rem "";
+          font-size: 0px;
+          line-height: 12px;
           letter-spacing: 0;
           color:#ff5687;
           .symbol {
@@ -321,7 +329,8 @@ export default {
           bottom: .12rem;
           right: .1rem;
           height: .12rem;
-          font: .12rem/.12rem "";
+          font-size: 12px;
+          line-height: 12px;
           color:#ff5687;
         }
       }

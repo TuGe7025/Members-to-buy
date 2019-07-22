@@ -1,35 +1,39 @@
 <template>
-  <div class="shop">
-    <div class="item-title">
-      <van-icon name="wap-home" />
-      <span class="info">昆山仓</span>
-    </div>
-    <div class="item"  v-for='(item,index) of list' :key='index'>
-      <div class="inp">
-        <input type="checkbox" v-model="item.flag">
+  <div class="cartbox">
+    <div class="shop" v-for='(item,index) of list' :key='index'>
+      <div class="item-title">
+        <van-icon name="wap-home" />
+        <span class="info">昆山仓</span>
       </div>
-      <div class="item-img">
-            <img
-              :src="item.imgs"
-              width="80px"
-              height="80px"
-            />
-          </div>
-          <div class="info-container">
-            <div class="item-name">{{item.names}}</div>
-            <div class="item-info">{{item.brandname}}</div>
-            <div class="item-pric">
-              <div class="price-cart">
-                <span class="mini">¥</span>
-                <span class="now-price">{{item.prices}}</span>
-              </div>
-              <div class="spec-num">
-                <span class="qian spec-num-info" @click="item.shop >= 2 ? item.shop -= 1 : item.shop = 1">-</span>
-                <span class="num">{{item.shop}}</span>
-                <span class="add spec-num-info" @click="item.shop += 1" >+</span>
+      <div class="item">
+        <div class="inp">
+          <input type="checkbox" v-model="item.flag">
+        </div>
+        <div class="item-img">
+              <img
+                :src="item.imgs"
+                width="80px"
+                height="80px"
+              />
+            </div>
+            <div class="info-container">
+              <div class="item-name">{{item.names}}</div>
+              <div class="item-info">{{item.brandname}}</div>
+              <div class="item-pric">
+                <div class="price-cart">
+                  <span class="mini">¥</span>
+                  <span class="now-price">{{item.prices}}</span>
+                </div>
+                <div class="spec-num">
+                  <span class="qian spec-num-info" @click="item.shop >= 2 ? item.shop -= 1 : item.shop = 1">-</span>
+                  <span class="num">{{item.shop}}</span>
+                  <span class="add spec-num-info" @click="item.shop += 1" >+</span>
+                  <!-- <button @click="deleteItem(index)" class="deleted">删除</button> -->
+                </div>
+                <span @click="deleteItem(index)" class="deleted">删除</span>
               </div>
             </div>
-          </div>
+      </div>
     </div>
     <div class="bay">
       <div class="bay-left">
@@ -77,15 +81,41 @@ export default {
     totalPrice () {
       return this.$store.getters.totalPrice
     }
+  },
+  mounted () {
+    if (this.list.length > 0) {
+      return null
+    }
+  },
+  methods: {
+    deleteItem (index) {
+      let arr = this.list
+      arr.splice(index, 1)
+    }
   }
 }
 </script>
 <style lang="scss">
 @import "@/lib/reset.scss";
+.deleted {
+  margin-left: 0.8rem;
+  line-height: 0.35rem;
+  display: inline-block;
+  background:#ff6666;
+  width: 0.6rem;
+  border-radius: 0.2rem;
+  color: #ffffff;
+  text-align: center;
+}
+.cartbox {
+  height:400px;
+  overflow: auto;
+}
 .shop {
   @include flexbox();
   @include flex-direction(column);
-  @include rect(100%, auto);
+  @include rect(100%, 1.8rem);
+  overflow: auto;
   margin-top: 0.03rem;
   padding: 0.09rem;
   background: #ffffff;
@@ -105,8 +135,8 @@ export default {
   .item {
     @include flexbox();
     margin-bottom: 0.3rem;
-    background: #ffffff;
-    @include rect(100%, 0.86rem);
+    // background: #ffffff;
+    @include rect(100%, 100%);
     .van-radio-group{
       padding-top: 0.3rem;
     }
@@ -115,7 +145,7 @@ export default {
       margin: 0 0.1rem;
     }
     .info-container {
-      @include rect(2.31rem, 0.86rem);
+      @include rect(2.31rem, 100%);
       .item-name {
         font-size: 14px;
         line-height: 18px;
@@ -125,7 +155,7 @@ export default {
       }
       .item-pric {
         @include flexbox();
-        justify-content: space-between;
+        // justify-content: space-between;
         .price-cart {
         line-height: 35px;
         margin-right: 0.5rem;
@@ -140,10 +170,7 @@ export default {
 .inp {
   // display: inline-block;
   @include rect(0.2rem, 0.2rem);
-  border-radius: 50%;
-  border: 1px solid #ccc;
   margin-top: 0.5rem;
-  overflow: hidden;
   input {
     @include rect(0.23rem, 0.23rem);
     display: inline-block;
@@ -151,6 +178,25 @@ export default {
     border: 1px solid #333;
     background: #ffffff;
   }
+}
+.spec-num {
+  position: relative;
+  right: 0;
+  .qian {
+    position: absolute;
+    top:0;
+    right:0;
+  }
+  .add {
+    position: absolute;
+    top:0;
+    left:0;
+  }
+}
+.num {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 32px;
 }
 .spec-num-info {
   margin-right: 10px;
@@ -192,6 +238,10 @@ export default {
   .info-content {
     color: #ff6666;
   }
+}
+.cart-content {
+  margin-bottom:200px;
+  overflow: auto;
 }
 .bay-right {
   width: 28%;

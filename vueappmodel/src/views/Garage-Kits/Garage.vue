@@ -35,7 +35,7 @@ export default {
     return {
       goodsList: [],
       garagelist: [],
-      zh: false,
+      zh: true,
       xl: false,
       max: false
     }
@@ -47,7 +47,6 @@ export default {
     fetch('api/garage')
       .then(res => res.json()).then(data => {
         this.garagelist = data
-        console.log(data)
       })
   },
   methods: {
@@ -78,7 +77,6 @@ export default {
       this.zh = true
       fetch('api/garage')
         .then(res => res.json()).then(data => {
-          console.log(data)
           this.garagelist = data
         })
     }
@@ -126,7 +124,8 @@ export default {
     .title {
       margin: 0 .24rem;
       height: .44rem;
-      font: .16rem/.44rem "";
+      font-size: 16px;
+      line-height: 44px;
       color:#fff;
       text-align: center;
       letter-spacing: 0;
@@ -148,7 +147,8 @@ export default {
       @include flex();
       height: .44rem;
       text-align: center;
-      font: .14rem/.44rem "";
+      font-size: 14px;
+      line-height: 44px;
       color: #999;
       &.active{
         color: #fb7299;
@@ -254,7 +254,8 @@ export default {
             @include margin(.06rem .1rem 0);
             .name {
               height: .36rem;
-              font: .14rem/.18rem "";
+              font-size: 14px;
+              line-height: 18px;
               @include ellipsis(100%, 2);
             }
           }
@@ -279,7 +280,8 @@ export default {
                 display: inline-block;
                 white-space: normal;
                 padding-left: .08rem;
-                font: .2rem/.3rem "";
+                font-size: 20px;
+                line-height: 30px;
                 transform: scale(.5);
                 transform-origin: left top;
               }
@@ -307,7 +309,8 @@ export default {
                   position: relative;
                 font-size: 0;
                 color: rgb(251, 114, 153);
-                  font: .18rem/.18rem "";
+                  font-size: 18px;
+                  line-height: 18px;
                   margin-left: .02rem;
                 }
               .link {
